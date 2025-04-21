@@ -12,24 +12,28 @@ import java.util.Collections;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Builder
 public class UserDetailsImpl implements UserDetails {
 
     private static final long serialVersionUID=1L;
     private Long id;
+    private String username;
     private String email;
     private String password;
-    private String username;
+
     private Collection<? extends GrantedAuthority> authorities;
 
     public static UserDetailsImpl build(User user){
         GrantedAuthority grantedAuthority=new SimpleGrantedAuthority(user.getRole());
-        return new UserDetailsImpl(
-                user.getId(),
-                user.getUsername(),
-                user.getPassword(),
-                user.getEmail(),
-                Collections.singleton(grantedAuthority)
-        );
+
+
+        return UserDetailsImpl.builder()
+                .id(user.getId())
+                .authorities(Collections.singleton(grantedAuthority))
+                .username(user.getUsername())
+                .password(user.getPassword())
+                .email(user.getEmail())
+                .build();
     }
 
     @Override

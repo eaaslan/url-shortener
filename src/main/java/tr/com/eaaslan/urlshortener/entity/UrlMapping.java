@@ -3,6 +3,7 @@ package tr.com.eaaslan.urlshortener.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -23,6 +24,8 @@ public class UrlMapping extends BaseEntityAudit {
     @JoinColumn(name = "user_id")
     private User user;
 
+    //todo create your own static builder class to reduce dependency
     @OneToMany(mappedBy = "urlMapping",cascade = CascadeType.ALL,orphanRemoval = true)
-    private List<ClickEvent> clickEvents;
+    @Builder.Default
+    private List<ClickEvent> clickEvents=new ArrayList<>();
 }
