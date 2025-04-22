@@ -1,6 +1,7 @@
 package tr.com.eaaslan.urlshortener.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -26,6 +27,7 @@ public class User extends BaseEntityAudit{
     private String username;
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     @Builder.Default
+    @JsonManagedReference
     private List<UrlMapping> urlMappings=new ArrayList<>();
 
 }

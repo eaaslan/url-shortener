@@ -51,7 +51,6 @@ public class UserRepositoryTest {
         urlMappingRepository.save(urlMapping);
 
         ClickEvent clickEvent= ClickEvent.builder()
-                .clickDate(LocalDateTime.now())
                 .urlMapping(urlMapping)
                 .build();
 

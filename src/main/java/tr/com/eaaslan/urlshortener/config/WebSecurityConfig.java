@@ -51,10 +51,10 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity)throws Exception{
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth->auth
-                        .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/api/urls/**").authenticated()
-                        .requestMatchers("/{shortUrl}").permitAll()
-                        .anyRequest().authenticated()
+//                        .requestMatchers("/api/auth/**").permitAll()
+//                        .requestMatchers("/api/urls/**").authenticated()
+//                        .requestMatchers("/{shortUrl}").permitAll()
+                        .anyRequest().permitAll()
 
                 );
         httpSecurity.authenticationProvider(daoAuthenticationProvider());

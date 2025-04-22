@@ -1,6 +1,7 @@
 package tr.com.eaaslan.urlshortener.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -11,14 +12,16 @@ import java.time.LocalDateTime;
 @Table
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
 @Builder
 @Getter
 @Setter
 public class ClickEvent extends BaseEntityAudit{
 
-    private LocalDateTime clickDate;
+    public ClickEvent(UrlMapping urlMapping){
+        this.urlMapping=urlMapping;
+    }
 
     @ManyToOne
+    @JsonBackReference
     private UrlMapping urlMapping;
 }

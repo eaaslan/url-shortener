@@ -37,15 +37,14 @@ public class UrlShortenerApplication {
             user = userRepository.save(user);
 
             UrlMapping urlMapping=UrlMapping.builder()
-                    .original_url("Long url")
-                    .short_url("Short url")
+                    .originalUrl("Long url")
+                    .shortUrl("Short url")
                     .user(user)
                     .build();
 
             urlMappingRepository.save(urlMapping);
 
             ClickEvent clickEvent= ClickEvent.builder()
-                    .clickDate(LocalDateTime.now())
                     .urlMapping(urlMapping)
                     .build();
 

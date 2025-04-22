@@ -10,11 +10,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import tr.com.eaaslan.urlshortener.entity.Dto.LoginRequest;
 import tr.com.eaaslan.urlshortener.entity.Dto.RegisterRequest;
+import tr.com.eaaslan.urlshortener.entity.UrlMapping;
 import tr.com.eaaslan.urlshortener.entity.User;
+import tr.com.eaaslan.urlshortener.repository.UrlMappingRepository;
 import tr.com.eaaslan.urlshortener.repository.UserRepository;
 import tr.com.eaaslan.urlshortener.security.jwt.JwtAuthenticationResponse;
 import tr.com.eaaslan.urlshortener.security.jwt.JwtUtils;
 import tr.com.eaaslan.urlshortener.security.jwt.service.UserDetailsImpl;
+
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -24,7 +28,11 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtUtils jwtUtils;
+    private final UrlMappingRepository urlMappingRepository;
 
+    public List<User> getAllUser(){
+        return userRepository.findAll();
+    }
 
     public User registerUser(RegisterRequest registerRequest){
         User user= User.builder()
@@ -54,4 +62,6 @@ public class UserService {
     public User getUserById(String name) {
         return userRepository.findUserByUsername(name).orElseThrow(()->new UsernameNotFoundException("Username not found: "+name));
     }
+
+
 }

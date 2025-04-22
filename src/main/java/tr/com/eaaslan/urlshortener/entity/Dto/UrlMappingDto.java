@@ -7,6 +7,5 @@ public record UrlMappingDto(
        String shortUrl,
        int clickCount,
        String username
-
 ) {
 }
