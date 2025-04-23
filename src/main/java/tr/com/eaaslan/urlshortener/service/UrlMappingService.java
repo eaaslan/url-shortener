@@ -1,5 +1,6 @@
 package tr.com.eaaslan.urlshortener.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import tr.com.eaaslan.urlshortener.entity.ClickEvent;
@@ -32,6 +33,11 @@ public class UrlMappingService {
         this.userRepository = userRepository;
         this.urlMappingRepository = urlMappingRepository;
         this.clickEventRepository = clickEventRepository;
+    }
+
+    public UrlMappingDto getUrlMappingByShortUrl(String shortURL){
+        UrlMapping urlMapping= urlMappingRepository.findByShortUrl(shortURL).orElseThrow(EntityNotFoundException::new);
+        return toDto(urlMapping);
     }
 
     public UrlMappingDto createShortUrl(String longUrl, User user) {
@@ -86,7 +92,7 @@ public class UrlMappingService {
     }
 
     public List<ClickEventDto> getClickEventsByDate(String shortUrl, LocalDate start, LocalDate end) {
-        UrlMapping urlMapping= urlMappingRepository.findByShortUrl(shortUrl);
+        UrlMapping urlMapping= urlMappingRepository.findByShortUrl(shortUrl).orElseThrow(EntityNotFoundException::new);
         List<ClickEvent> clickEvents=clickEventRepository.findByUrlMappingAndCreatedAtBetween(urlMapping,start.atStartOfDay(),end.plusDays(1).atStartOfDay());
       return clickEvents.stream().collect(Collectors.groupingBy(click->click.getCreatedAt().toLocalDate(),Collectors.counting()))
                .entrySet().stream()
@@ -101,4 +107,7 @@ public class UrlMappingService {
     }
 
 
+    public String getOriginalUrl(String shortUrl) {
+        return urlMappingRepository.findByShortUrl(shortUrl).orElseThrow(EntityNotFoundException::new).getOriginalUrl();
+    }
 }

@@ -5,12 +5,13 @@ import tr.com.eaaslan.urlshortener.entity.ClickEvent;
 import tr.com.eaaslan.urlshortener.entity.UrlMapping;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UrlMappingRepository extends JpaRepository<UrlMapping,Long> {
 
     List<UrlMapping> findByUser_Username(String userUsername);
 
-    UrlMapping findByShortUrl(String shortUrl);
+    Optional<UrlMapping> findByShortUrl(String shortUrl);
 
     // @Query("SELECT u FROM UrlMapping u WHERE u.user.username = :username")
     //List<UrlMapping> customFindByUsername(@Param("username") String username);
